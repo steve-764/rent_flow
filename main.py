@@ -27,6 +27,7 @@ cust3 = Customer("C003", "Newt", "0798456321", 36451278, "DL8795")
 # cust2.display_details()
 
 
-
-# rental1 = Rental("R001", "Cust1", "Car1", 3)
-# print(rental1)
+rental1 = Rental("R001", cust1, car1, rental_days=3)  
+rental1.complete_rental(actual_days=5, damage_charge=30)
+rental1.mark_as_paid()
+rental1.display_rental_details()
