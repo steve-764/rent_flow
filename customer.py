@@ -1,0 +1,39 @@
+class Customer():
+    def __init__(self, customer_id, name, phone_number, national_id, driving_licence):
+        if driving_licence is None:
+            raise ValueError("You must enter a driving licence number.")
+
+        self.customer_id = customer_id
+        self.name = name
+        self.phone_number = phone_number
+        self.national_id = national_id
+        self.driving_licence = driving_licence
+        self.rentals = []
+
+    def display_details(self):
+        print(f"Customer ID : {self.customer_id}")
+        print(f"Name : {self.name}")
+        print(f"Phone number : {self.phone_number}")
+        print(f"National ID : {self.national_id}")
+        print(f"Driving licence : {self.driving_licence}")
+        print(f"Rentals : {self.rentals}")
+
+    def add_rental(self):
+        # add rental to end of list, 
+        # redo when renting is implemented
+        self.rentals.append()
+
+    def view_rental_history(self):
+        # print every rental in the list
+        for rental in self.rentals:
+            print(f"{rental}")
+
+
+# tests
+
+# cust1 = Customer("C001", "Bob", "0712345678", 123456789, "DL1234")
+
+# cust1.display_details()
+
+cust2 = Customer("C002", "Mob", "0712345678", 123456789, "")
+cust2.display_details()

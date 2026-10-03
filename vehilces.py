@@ -28,13 +28,15 @@ class Vehicle(ABC):
         print(f"Model : {self.model}")
         print(f"Year : {self.year}")
         print(f"Daily rate : {self.daily_rate}")
+        print(f"Available : {self.__available}")
+
 
     @abstractmethod
     def calculate_rental_cost(self, days):
         pass
 
 
-class economyCar(Vehicle):
+class EconomyCar(Vehicle):
     def __init__(self, registration_number, make, model, year, daily_rate):
         super().__init__(registration_number, make, model, year, daily_rate)
 
@@ -50,7 +52,8 @@ class SUV(Vehicle):
     def calculate_rental_cost(self, days):
         return (self.daily_rate * days) + 2000
 
-class luxuryCar(Vehicle):
+
+class LuxuryCar(Vehicle):
     def __init__(self, registration_number, make, model, year, daily_rate):
         super().__init__(registration_number, make, model, year, daily_rate)
 
@@ -60,9 +63,9 @@ class luxuryCar(Vehicle):
 
 
 # test 
-car1= economyCar("KDK 123A", "Toyota", "Axio", 2022, 3000)
-car2 = SUV("KDK 123A", "Toyota", "Prado", 2022, 8000)
-car3 = luxuryCar("KDK 123A", "Mercedes", "E-Class", 2022, 15000)
+car1= EconomyCar("KDK 123A", "Toyota", "Axio", 2022, 3000)
+car2 = SUV("KBG 222B", "Toyota", "Prado", 2022, 8000)
+car3 = LuxuryCar("KGD 678C", "Mercedes", "E-Class", 2022, 15000)
 
 car1.display_details()
 
