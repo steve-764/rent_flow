@@ -60,15 +60,3 @@ class LuxuryCar(Vehicle):
     # luxury cars have a 10% insurance charge of total rent cost
     def calculate_rental_cost(self, days):
         return (self.daily_rate * days) + ((self.daily_rate * days) * 0.1)
-
-
-# test 
-car1= EconomyCar("KDK 123A", "Toyota", "Axio", 2022, 3000)
-car2 = SUV("KBG 222B", "Toyota", "Prado", 2022, 8000)
-car3 = LuxuryCar("KGD 678C", "Mercedes", "E-Class", 2022, 15000)
-
-car1.display_details()
-
-# print(car1.calculate_rental_cost(3))
-# print(car2.calculate_rental_cost(3))
-# print(car3.calculate_rental_cost(3))
