@@ -1,6 +1,6 @@
 class Customer():
     def __init__(self, customer_id, name, phone_number, national_id, driving_licence):
-        if driving_licence is None:
+        if not driving_licence:
             raise ValueError("You must enter a driving licence number.")
 
         self.customer_id = customer_id
@@ -35,5 +35,6 @@ class Customer():
 
 # cust1.display_details()
 
+# testing empty driving licence number
 cust2 = Customer("C002", "Mob", "0712345678", 123456789, "")
 cust2.display_details()
