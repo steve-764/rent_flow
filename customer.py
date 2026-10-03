@@ -31,7 +31,8 @@ class Customer():
 
 # tests
 
-# cust1 = Customer("C001", "Bob", "0712345678", 123456789, "DL1234")
+cust1 = Customer("C001", "Bob", "0712345678", 123456789, "DL1234")
+cust3 = Customer("C003", "Newt", "0798456321", 36451278, "DL8795")
 
 # cust1.display_details()
 
