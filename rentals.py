@@ -58,17 +58,18 @@ class Rental:
         self.vehicle.mark_as_available()
 
     def cancel_rental(self):
-        if self.status != RentalStatus.CANCELLED:
+        if self.status != RentalStatus.ACTIVE:
             raise ValueError("Only actively rented vehicles can be cancellled.")
-
         self.status = RentalStatus.CANCELLED
         self.vehicle.mark_as_available()
+
 
     def mark_as_paid(self):
         self.__paid = True
 
     def is_paid(self):
         return self.__paid
+
 
     def display_rental_details(self):
         print(f"--- Rental {self.rental_id} ---")
