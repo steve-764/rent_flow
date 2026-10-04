@@ -83,4 +83,9 @@ class Rental:
         print(f"Paid     : {'Yes' if self.is_paid() else 'No'}")
 
 
+    def __str__(self):
+        return (f"{self.rental_id} | {self.vehicle.make} {self.vehicle.model} "
+                f"({self.vehicle.registration_number}) | {self.rental_days} days | "
+                f"{self.status.value} | KSh {self.calculate_total():,.0f}")
+
 

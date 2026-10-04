@@ -37,18 +37,18 @@ def find_customer(self, customer_id):
 
 def search_vehicles(self, vehicle_type = None, max_daily_rate = None):
     results = []
-    for vehicle in self.vehicles:
-        if not vehicle.is_available():
+    for v in self.vehicles:
+        if not v.is_available():
             continue
         if vehicle_type is not None:
             if isinstance(vehicle_type, str):
-                if type(vehicle).__name__.lower() != vehicle_type.lower():
+                if type(v).__name__.lower() != vehicle_type.lower():
                     continue
-            elif not isinstance(vehicle, vehicle_type):
+            elif not isinstance(v, vehicle_type):
                 continue
-        if max_daily_rate is not None and vehicle.daily_rate > max_daily_rate:
+        if max_daily_rate is not None and v.daily_rate > max_daily_rate:
             continue
-        results.append(vehicle)
+        results.append(v)
     return results
 
 
@@ -67,6 +67,7 @@ def rent_vehicle(self, customer, vehicle, days):
     rental_id = f"R{len(self.rentals) + 1}"
     rental = Rental(rental_id, customer, vehicle, days)
     self.rentals.append(rental)
+    customer.add_rental(rental)
     return rental
 
 
@@ -89,5 +90,52 @@ def process_payment(self, payment):
         return True
     return False
 
+
+@property
+def revenue(self):
+    return self.__revenue
+
+
+def _show_rentals(self, status, title):
+    matching = [r for r in self.rentals if r.status == status]
+    print(f"--- {title} ({len(matching)}) ---")
+    if not matching:
+        print("None.")
+    for r in matching:
+        print(f"{r.rental_id}   |   {r.customer_name} "
+              f"{r.vehicle.registration_number}   |    {r.rental_days} days")
+    return matching
+
+
+def show_active_rentals(self):
+    return self._show_rentals(RentalStatus.ACTIVE, "Active rentals")
+
+
+def show_completed_rentals(self):
+    return self._show_rentals(RentalStatus.COMPLETED, "Completed rentals")
+
+
+
+def generate_report(self):
+        active = [r for r in self.rentals if r.status == RentalStatus.ACTIVE]
+        completed = [r for r in self.rentals if r.status == RentalStatus.COMPLETED]
+        cancelled = [r for r in self.rentals if r.status == RentalStatus.CANCELLED]
+        unpaid = [r for r in completed if not r.is_paid()]
+        outstanding = sum(r.calculate_total() for r in unpaid)
+        available = sum(1 for v in self.vehicles if v.is_available())
+
+        print("=" * 40)
+        print(f"{self.name.upper()} - MANAGEMENT REPORT")
+        print("=" * 40)
+        print(f"Vehicles in fleet : {len(self.vehicles)} ({available} available)")
+        print(f"Customers         : {len(self.customers)}")
+        print(f"Rentals           : {len(self.rentals)} total")
+        print(f"  Active          : {len(active)}")
+        print(f"  Completed       : {len(completed)}")
+        print(f"  Cancelled       : {len(cancelled)}")
+        print(f"Payments received : {len(self.payments)}")
+        print(f"Total revenue     : KSh {self.revenue:,.0f}")
+        print(f"Unpaid completed  : {len(unpaid)} rentals (KSh {outstanding:,.0f} outstanding)")
+        print("=" * 40)
 
     

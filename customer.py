@@ -16,15 +16,18 @@ class Customer():
         print(f"Phone number : {self.phone_number}")
         print(f"National ID : {self.national_id}")
         print(f"Driving licence : {self.driving_licence}")
-        print(f"Rentals : {self.rentals}")
+        print(f"Rentals : {len(self.rentals)}")
 
-    def add_rental(self):
-        # add rental to end of list, 
-        # redo when renting is implemented
-        self.rentals.append()
+    def add_rental(self, rental):
+        self.rentals.append(rental)
 
     def view_rental_history(self):
-        # print every rental in the list
+        if not self.rentals:
+            print("No rentals yet.")
+            return
         for rental in self.rentals:
-            print(f"{rental}")
+            print(rental)
+
+
+    
 

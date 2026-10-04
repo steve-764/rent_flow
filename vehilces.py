@@ -27,8 +27,9 @@ class Vehicle(ABC):
         print(f"Make : {self.make}")
         print(f"Model : {self.model}")
         print(f"Year : {self.year}")
+        print(f"Class : {type(self).__name__}")
         print(f"Daily rate : {self.daily_rate}")
-        print(f"Available : {self.__available}")
+        print(f"Available : {'Yes' if self.__available else 'No'}")
 
 
     @abstractmethod
@@ -37,26 +38,20 @@ class Vehicle(ABC):
 
 
 class EconomyCar(Vehicle):
-    def __init__(self, registration_number, make, model, year, daily_rate):
-        super().__init__(registration_number, make, model, year, daily_rate)
-
     def calculate_rental_cost(self, days):
         return self.daily_rate * days
 
 
 class SUV(Vehicle):
-    def __init__(self, registration_number, make, model, year, daily_rate):
-        super().__init__(registration_number, make, model, year, daily_rate)
-
+    servive_charge = 2000
     # suv has ksh 2000 service charge added
     def calculate_rental_cost(self, days):
-        return (self.daily_rate * days) + 2000
+        return self.daily_rate * days + self.servive_charge
 
 
 class LuxuryCar(Vehicle):
-    def __init__(self, registration_number, make, model, year, daily_rate):
-        super().__init__(registration_number, make, model, year, daily_rate)
-
+    insurance_rate = 0.1
     # luxury cars have a 10% insurance charge of total rent cost
     def calculate_rental_cost(self, days):
-        return (self.daily_rate * days) + ((self.daily_rate * days) * 0.1)
+        base = self.daily_rate * days
+        return base + base * self.insurance_rate
