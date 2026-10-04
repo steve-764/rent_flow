@@ -1,3 +1,6 @@
+from rentals import Rental, RentalStatus
+
+
 class CarRentalSysytem():
     def __init__(self):
         self.name = "SafariDrive Rentals"
@@ -47,6 +50,44 @@ def search_vehicles(self, vehicle_type = None, max_daily_rate = None):
             continue
         results.append(vehicle)
     return results
+
+
+
+def rent_vehicle(self, customer, vehicle, days):
+    if customer not in self.customers:
+        raise ValueError("Customer is not registered.")
+    if vehicle not in self.vehicles:
+        raise ValueError("Vehicle not in fleet")
+    if not vehicle.is_available():
+        raise ValueError(f"Vehicle {vehicle.registration_number} is not available.")
+    if days < 1:
+        raise ValueError("Vehicle must be rented for atleast 1 day.")
+
+
+    rental_id = f"R{len(self.rentals) + 1}"
+    rental = Rental(rental_id, customer, vehicle, days)
+    self.rentals.append(rental)
+    return rental
+
+
+
+def return_vehicle(self, rental, actual_days, damage_charge = 0):
+    if rental not in self.rentals:
+        raise ValueError("Rental not in the system")
+    rental.complete_rental(actual_days, damage_charge)
+    return rental
+
+
+
+def process_payment(self, payment):
+    if payment.rental not in self.rentals:
+        raise ValueError("Payment cannot be made for a vehicle that is not rented.")
+
+    if payment.process_payment():
+        self.payment.append(payment)
+        self.__revenue += payment.amount
+        return True
+    return False
 
 
     
