@@ -1,6 +1,7 @@
 import random
 import string
 from abc import ABC, abstractmethod
+from rentals import RentalStatus
 
 class Payment(ABC):
     def __init__(self, rental):
@@ -13,11 +14,11 @@ class Payment(ABC):
 
 
     def _validate_rental(self):
-        if self.status != "COMPLETED":
+        if self.rental.status != RentalStatus.COMPLETED:
             print("Payment Failed. Rental not competed.")
             return False
         if self.rental.is_paid():
-            print("Payment Failed: Rental is alreadt paid.")
+            print("Payment Failed: Rental is already paid.")
             return False
         return True
 
@@ -45,5 +46,40 @@ class MpesaPayment(Payment):
         print(f"Payment of Ksh {self.amount} successful.")
         return self._finalise()
 
-        
+
+class CardPayment(Payment):
+    def __init__(self, rental, last_digits):
+        super().__init__(rental)
+        last_digits = str(last_digits)
+        if len(last_digits) != 4 or not last_digits.isdigit():
+            raise ValueError("Provide 4 digits of the card!")
+        self.last_digits = last_digits
+
+    def process_payment(self):
+        if not self._validate_rental():
+            return False
+
+        print(f"Card ending {self.last_digits} charged Ksh {self.amount}")
+        return self._finalise()
+
+
+class CashPayment(Payment):
+    def __init__(self, rental, amount_paid):
+        super().__init__(rental)
+        self.amount_paid = amount_paid
+
+    def process_payment(self):
+        if not self._validate_rental():
+            return False
+
+        if self.amount_paid < self.amount:
+            deficit = self.amount - self.amount_paid
+            print(f"Payment Failed: Cash deficit of Ksh {deficit}.")
+            return False
+
+        change = self.amount_paid - self.amount
+        print(f"Cash received : Ksh {self.amount_paid}")
+        print(f"Change due: Ksh {change}")
+        print(f"Cash payment of Ksh {self.amount} received.")
+        return self._finalise()
 

@@ -1,6 +1,12 @@
+from enum import Enum
 from vehilces import Vehicle
 from customer import Customer
 
+
+class RentalStatus(Enum):
+    ACTIVE = "ACTIVE"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
 
 class Rental:
     def __init__(self, rental_id, customer, vehicle, rental_days):
@@ -14,14 +20,14 @@ class Rental:
         self.vehicle = vehicle
         self.rental_days = rental_days
         self.actual_days = None
-        self.status = None
+        self.status = RentalStatus.ACTIVE
         self.base_cost = vehicle.calculate_rental_cost(rental_days)
         self.late_fee = 0
         self.damage_fee = 0
         self.__paid = False
 
         self.vehicle.mark_as_rented()
-        self.status = "ACTIVE"
+
 
     penalty_rate = 0.2
 
@@ -37,7 +43,7 @@ class Rental:
         return self.base_cost + self.late_fee + self.damage_fee
 
     def complete_rental(self, actual_days, damage_charge = 0):
-        if self.status != "ACTIVE":
+        if self.status != RentalStatus.ACTIVE:
             raise ValueError("Only currently rented vehicles can be returned.")
         if actual_days < 1:
             raise ValueError("Vehicle must be rented for atleast 1 day")
@@ -48,14 +54,14 @@ class Rental:
         self.actual_days = actual_days
         self.damage_fee = damage_charge
         self.calculate_late_fee()
-        self.status = "COMPLETED"
+        self.status = RentalStatus.COMPLETED
         self.vehicle.mark_as_available()
 
     def cancel_rental(self):
-        if self.status != "ACTIVE":
+        if self.status != RentalStatus.CANCELLED:
             raise ValueError("Only actively rented vehicles can be cancellled.")
 
-        self.status = "CANCELLED"
+        self.status = RentalStatus.CANCELLED
         self.vehicle.mark_as_available()
 
     def mark_as_paid(self):
