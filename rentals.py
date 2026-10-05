@@ -8,6 +8,9 @@ class RentalStatus(Enum):
     COMPLETED = "COMPLETED"
     CANCELLED = "CANCELLED"
 
+    def __str__(self):
+        return self.value
+
 class Rental:
     def __init__(self, rental_id, customer, vehicle, rental_days):
         if rental_days < 1:
@@ -72,16 +75,19 @@ class Rental:
 
 
     def display_rental_details(self):
+        print("=" * 40)
         print(f"--- Rental {self.rental_id} ---")
-        print(f"Customer : {self.customer.name}")    
-        print(f"Vehicle  : {self.vehicle.make} {self.vehicle.model} ({self.vehicle.registration_number})")
-        print(f"Status   : {self.status}")
-        print(f"Days     : {self.rental_days} agreed, {self.actual_days if self.actual_days is not None else '-'} actual")
-        print(f"Base cost: {self.base_cost:.2f}")
-        print(f"Late fee : {self.late_fee:.2f}")
-        print(f"Damage   : {self.damage_fee:.2f}")
-        print(f"TOTAL    : {self.calculate_total():.2f}")
-        print(f"Paid     : {'Yes' if self.is_paid() else 'No'}")
+        print(f"Customer    : {self.customer.name}")    
+        print(f"Vehicle     : {self.vehicle.make} {self.vehicle.model} - {self.vehicle.registration_number}")
+        print(f"Status      : {self.status}")
+        print(f"Days booked : {self.rental_days} booked")
+        print(f"Days rented : {self.actual_days if self.actual_days is not None else '-'} rented")
+        print(f"Base cost   : {self.base_cost:.2f}")
+        print(f"Late fee    : {self.late_fee:.2f}")
+        print(f"Damage      : {self.damage_fee:.2f}")
+        print(f"TOTAL       : {self.calculate_total():.2f}")
+        print(f"Paid        : {'Yes' if self.is_paid() else 'No'}")
+        print("=" * 40)
 
 
     def __str__(self):

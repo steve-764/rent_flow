@@ -2,7 +2,7 @@
 Test script for the SafariDrive Rentals project.
 
 Run from the folder that holds all the project files:
-    python main.py
+    python test.py
 
 Each check prints [PASS] or [FAIL]; a summary is shown at the end.
 """

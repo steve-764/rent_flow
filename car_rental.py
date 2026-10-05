@@ -37,12 +37,14 @@ class CarRentalSysytem():
 
     def show_available_vehicles(self):
         available = [v for v in self.vehicles if v.is_available()]
+        print("=" * 40)
         print(f"--- Available vehicles ({len(available)})   ---")
         if not available:
             print("No vehicles available.")
         for v in available:
-            print(f"{v.registration_number}  | {v.year} {v.make} {v.model}"
-                  f"| {type(v).__name__}    | Ksh {v.daily_rate} /day")
+            print(f"{v.registration_number:<10}  | {v.year} {v.make:<10} {v.model:<10}"
+                  f"| {type(v).__name__:<10}    | Ksh {v.daily_rate} /day")
+        print("=" * 40)
         return available
 
     
