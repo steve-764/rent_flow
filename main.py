@@ -11,8 +11,12 @@ car1 = EconomyCar("KDK 123A", "Toyota", "Axio", 2022, 4000)
 car2 = SUV("KDJ 456B", "Toyota", "Prado", 2023, 8000)
 car3 = SUV("KDJ 672B", "Nissan", "X-Trail", 2021, 6500)
 car4 = LuxuryCar("KDL 789C", "Mercedes-Benz", "E-Class", 2024, 15000)
+car5 = EconomyCar("KBD 556P", "Mazda", "Demio", 2021, 2500)
+car6 = LuxuryCar("KDE 001A", "Nissan", "ALtima", 2024, 10900)
 
-for car in [car1, car2, car3, car4]:
+
+
+for car in [car1, car2, car3, car4, car5, car6]:
     system.add_vehicle(car)
 
 # Register a customer
@@ -45,17 +49,35 @@ system.process_payment(payment1)
 rental2 = system.rent_vehicle(customer2, car1, 9)
 
 system.return_vehicle(rental2, actual_days=9)
-rental1.display_rental_details()
+rental2.display_rental_details()
 payment2 = CashPayment(rental2, 64788)
 system.process_payment(payment2)
 
 
 # ===================================
-rental3 = system.rent_vehicle(customer2, car4, 1)
+rental3 = system.rent_vehicle(customer2, car6, 14)
 
-system.return_vehicle(rental3, actual_days=2)
-rental1.display_rental_details()
-payment2 = MpesaPayment(rental3, "0797456321")
-system.process_payment(payment2)
+system.return_vehicle(rental3, actual_days=15)
+rental3.display_rental_details()
+payment3 = CashPayment(rental3, 50000)
+system.process_payment(payment3)
 
+
+# ===================================
+rental4 = system.rent_vehicle(customer3, car5, 8)
+
+system.return_vehicle(rental4, actual_days=8)
+rental4.display_rental_details()
+payment4 = MpesaPayment(rental4, "0797456321")
+system.process_payment(payment4)
+
+# ===================================
+rental5 = system.rent_vehicle(customer1, car6, 14)
+
+system.return_vehicle(rental5, actual_days=20)
+rental5.display_rental_details()
+payment5 = CardPayment(rental5, 5678)
+system.process_payment(payment5)
+
+# ==========================
 system.generate_report()
