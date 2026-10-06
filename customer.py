@@ -25,9 +25,6 @@ class Customer():
         if not self.rentals:
             print("No rentals yet.")
             return
+        print(f"=== {self.name} Rental History  ===")
         for rental in self.rentals:
             print(rental)
-
-
-    
-
